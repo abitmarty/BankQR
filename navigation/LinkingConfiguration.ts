@@ -16,6 +16,11 @@ export default {
               TabTwoScreen: 'two',
             },
           },
+          Admin: {
+            screens: {
+              TabTwoScreen: 'three',
+            },
+          },
         },
       },
       NotFound: '*',
