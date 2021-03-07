@@ -8,7 +8,8 @@ import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import TabOneScreen from '../screens/TabOneScreen';
 import TabTwoScreen from '../screens/TabTwoScreen';
-import { BottomTabParamList, TabOneParamList, TabTwoParamList } from '../types';
+import AdminScreen from '../screens/AdminScreen';
+import { BottomTabParamList, TabOneParamList, TabTwoParamList, AdminParamList } from '../types';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -31,6 +32,13 @@ export default function BottomTabNavigator() {
         component={TabTwoNavigator}
         options={{
           tabBarIcon: ({ color }) => <Ionicons name="scan-outline" size={24} color="black" />,
+        }}
+      />
+      <BottomTab.Screen
+        name="Admin"
+        component={AdminNavigator}
+        options={{
+          tabBarIcon: ({ color }) => <MaterialIcons name="admin-panel-settings" size={24} color="black" />,
         }}
       />
     </BottomTab.Navigator>
@@ -70,5 +78,19 @@ function TabTwoNavigator() {
         options={{ headerTitle: 'Scanner' }}
       />
     </TabTwoStack.Navigator>
+  );
+}
+
+const Admintack = createStackNavigator<AdminParamList>();
+
+function AdminNavigator() {
+  return (
+    <Admintack.Navigator>
+      <Admintack.Screen
+        name="AdminScreen"
+        component={AdminScreen}
+        options={{ headerTitle: 'Admin' }}
+      />
+    </Admintack.Navigator>
   );
 }
