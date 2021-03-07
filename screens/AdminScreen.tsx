@@ -1,14 +1,66 @@
-import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Touchable, AsyncStorage } from 'react-native';
+//import AsyncStorage from '../node_modules/@react-native-async-storage';
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import { setStatusBarTranslucent } from 'expo-status-bar';
+import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
+import Colors from '../constants/Colors';
 
 export default function AdminScreen() { 
+  const [balance, setBalance] = useState();
+
+  const remove = async() => {
+    try {
+      await AsyncStorage.removeItem("MyBalance")
+      alert("removing");
+    }catch (err){
+      alert(err)
+    }finally {
+      setBalance("");
+    }
+  }
+
+  const save = async() => {
+    try {
+      await AsyncStorage.setItem("MyBalance", balance)
+      alert("saving");
+    }catch (err){
+      alert(err)
+    }
+  }
+
+  useEffect(() => {
+    load();
+  });
+
+  const load = async() => {
+    try {
+      let balance = await AsyncStorage.getItem("MyBalance");
+
+      if (balance !== null){
+        setBalance(balance)
+      }
+    }catch(err){
+      alert(err)
+    }
+  }
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Imma admin</Text>
+      <Text style={styles.title}>Balance</Text>
+      <Text>{balance}</Text>
+
+      <TextInput style={styles.input} onChangeText={(text) => setBalance(text)}/>
+
+      <TouchableOpacity onPress={() => save()} style={styles.button}>
+        <Text style={{ color: 'white' }}>Save settings</Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity onPress={() => remove()} style={styles.button}>
+        <Text style={{ color: 'white' }}>Remove settings</Text>
+      </TouchableOpacity>
     </View>
   );
 }
@@ -28,4 +80,25 @@ const styles = StyleSheet.create({
     height: 1,
     width: '80%',
   },
+  input: {
+    borderWidth: 1,
+    borderColor: Colors.light.tint,
+    alignSelf: 'stretch',
+    marginHorizontal: 52,
+    marginVertical: 20,
+    height: 44,
+    borderRadius: 5,
+
+  },
+  button: {
+    backgroundColor: Colors.light.tint,
+    color: '#ffffff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'stretch',
+    paddingVertical: 8,
+    paddingHorizontal: 86,
+    borderRadius: 5,
+    marginTop: 20
+  }
 });

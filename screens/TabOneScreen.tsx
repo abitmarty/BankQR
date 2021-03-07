@@ -1,17 +1,37 @@
-import * as React from 'react';
-import { StyleSheet } from 'react-native';
+import React, { useState, useEffect, Component } from 'react';
+import { StyleSheet, AsyncStorage } from 'react-native';
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import { setStatusBarTranslucent } from 'expo-status-bar';
 
 export default function TabOneScreen() { 
+  const [balance, setBalance] = useState();
+
+  const load = async() => {
+    try {
+      let balance = await AsyncStorage.getItem("MyBalance");
+
+      if (balance !== null){
+        setBalance(balance)
+      }
+    }catch(err){
+      alert(err)
+    }
+  }
+
+  useEffect(() => {
+    load();
+  });
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>$20.00</Text>
+      <Text style={styles.title}>${balance}</Text>
     </View>
   );
 }
+
+
 
 const styles = StyleSheet.create({
   container: {
