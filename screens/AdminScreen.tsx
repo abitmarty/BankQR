@@ -8,42 +8,45 @@ import { setStatusBarTranslucent } from 'expo-status-bar';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import Colors from '../constants/Colors';
 
+// TODO: remove refs (fixed em)
+
 class AdminScreen extends Component {
   constructor(props : any) {
     super(props);
-    this.balanceRef = React.createRef();
+    //this.balanceRef = React.createRef();
+    //this.vibrationRef = React.createRef();
     this.state = {
       balance: "",
-      balanceNew: ""
+      balanceNew: "",
+      vibration: "",
+      vibrationNew: ""
     }
   }
 
   save = async() => {
     try {
       await AsyncStorage.setItem("MyBalance", this.state.balanceNew)
+      await AsyncStorage.setItem("MyVibration", this.state.vibrationNew)
+      console.warn("saved");
+      ("Saved :)")
     }catch (err){
       alert(err)
     }
-    this.balanceRef.current.clear();
-  }
-
-  remove = async() => {
-    try {
-      await AsyncStorage.removeItem("MyBalance")
-    }catch (err){
-      alert(err)
-    }finally {
-      this.setState({balance: "0"});
-    }
-    this.balanceRef.current.clear();
+    //this.balanceRef.current.clear();
+    //this.vibrationRef.current.clear();
   }
 
   load = async() => {
     try {
       let balance = await AsyncStorage.getItem("MyBalance");
+      let vibration = await AsyncStorage.getItem("MyVibration");
 
       if (balance !== null){
         this.setState({balance: balance});
+      }
+
+      if (vibration !== null){
+        this.setState({vibration: vibration})
       }
     }catch(err){
       alert(err)
@@ -54,24 +57,17 @@ class AdminScreen extends Component {
     this.load();
   }
 
-  componentDidUpdate(){
-    this.load();
-  }
-
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Balance</Text>
-        <Text>{this.state.balance}</Text>
+        <TextInput defaultValue={this.state.balance} keyboardType="numeric" style={styles.input} onChangeText={(text) => this.setState({balanceNew: text}) }/>
 
-        <TextInput keyboardType="numeric" ref={this.balanceRef} style={styles.input} onChangeText={(text) => this.setState({balanceNew: text}) }/>
+        <Text style={styles.title}>Vibration in ms</Text>
+        <TextInput defaultValue={this.state.vibration} keyboardType="numeric" style={styles.input} onChangeText={(text) => this.setState({vibrationNew: text}) }/>
 
         <TouchableOpacity onPress={() => this.save()} style={styles.button}>
           <Text style={{ color: 'white' }}>Save settings</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={() => this.remove()} style={styles.button}>
-          <Text style={{ color: 'white' }}>Remove settings</Text>
         </TouchableOpacity>
       </View>
     );
@@ -100,7 +96,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.light.tint,
     alignSelf: 'stretch',
     marginHorizontal: 52,
-    marginVertical: 20,
+    marginVertical: 10,
     height: 44,
     borderRadius: 5,
 
