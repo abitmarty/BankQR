@@ -5,6 +5,7 @@ import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 
 import QRScanner from '../components/QRScanner';
+import { RootStackParamList } from '../types';
 
 export default function TabTwoScreen() {
   return (
