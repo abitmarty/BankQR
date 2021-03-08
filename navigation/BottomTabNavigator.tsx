@@ -11,11 +11,21 @@ import TabTwoScreen from '../screens/TabTwoScreen';
 import AdminScreen from '../screens/AdminScreen';
 import { BottomTabParamList, TabOneParamList, TabTwoParamList, AdminParamList } from '../types';
 
+import { StackScreenProps } from '@react-navigation/stack';
+import { RootStackParamList } from '../types';
+
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
-export default function BottomTabNavigator() {
-  const colorScheme = useColorScheme();
+export default function BottomTabNavigator({
+  navigation,
+}: StackScreenProps<RootStackParamList, 'NotFound'>) {
+  
+  // const unsubscribe = navigation.addListener('Balance', e => {
+  //   // Prevent default action
+  //   alert("Load balance");
+  // });
 
+  const colorScheme = useColorScheme();
   return (
     <BottomTab.Navigator
       initialRouteName="Balance"

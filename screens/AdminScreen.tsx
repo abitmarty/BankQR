@@ -14,7 +14,6 @@ export default function AdminScreen() {
   const remove = async() => {
     try {
       await AsyncStorage.removeItem("MyBalance")
-      alert("removing");
     }catch (err){
       alert(err)
     }finally {
@@ -25,7 +24,6 @@ export default function AdminScreen() {
   const save = async() => {
     try {
       await AsyncStorage.setItem("MyBalance", balance)
-      alert("saving");
     }catch (err){
       alert(err)
     }

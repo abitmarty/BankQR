@@ -1,37 +1,52 @@
-import React, { useState, useEffect, Component } from 'react';
-import { StyleSheet, AsyncStorage } from 'react-native';
+import React, { useState, useEffect, Component  } from 'react';
+import { StyleSheet, AsyncStorage, TouchableOpacity } from 'react-native';
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import { setStatusBarTranslucent } from 'expo-status-bar';
 
-export default function TabOneScreen() { 
-  const [balance, setBalance] = useState();
+class TabOne extends Component {
+  constructor(props : any) {
+    super(props);
+    this.state = {
+      balancest: "",
+      count: 0
+    }
+  }
 
-  const load = async() => {
+  load = async() => {
     try {
       let balance = await AsyncStorage.getItem("MyBalance");
 
       if (balance !== null){
-        setBalance(balance)
+        this.setState({ balancest: balance })
+      } else{
+        this.setState({ balancest: '0' })
       }
     }catch(err){
       alert(err)
     }
   }
 
-  useEffect(() => {
-    load();
-  });
+  componentDidMount(){
+    this.load();
+  }
 
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>${balance}</Text>
+  componentDidUpdate(){
+    this.load();
+  }
+
+
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.title}>${this.state.balancest}</Text>
     </View>
-  );
-}
+    );
+  }
+};
 
-
+export default TabOne;
 
 const styles = StyleSheet.create({
   container: {
@@ -47,5 +62,16 @@ const styles = StyleSheet.create({
     marginVertical: 30,
     height: 1,
     width: '80%',
+  },
+  button: {
+    backgroundColor: 'red',
+    color: '#ffffff',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'stretch',
+    paddingVertical: 8,
+    paddingHorizontal: 86,
+    borderRadius: 5,
+    marginTop: 20
   },
 });
