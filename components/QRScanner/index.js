@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View, StyleSheet, Button, Vibration } from 'react-native';
+import { Text, View, StyleSheet, Button, Vibration, AsyncStorage } from 'react-native';
 import styles from './styles';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { useNavigation } from '@react-navigation/native';
@@ -9,11 +9,28 @@ const QRScanner = (props) => {
     const [hasPermission, setHasPermission] = useState(null);
     const [scanned, setScanned] = useState(false);
     const navigation = useNavigation(); 
+    const [vibrationUs, setVibrationUs]= useState();
 
     const ONE_SECOND_IN_MS = 1000;
 
-    
+    const load = async() => {
+      try {
+        let vibration = await AsyncStorage.getItem("MyVibration");
+  
+        if (vibration !== null){
+          setVibrationUs(parseInt(vibration));
+        } else{
+          setVibrationUs(parseInt(0));
+        }
+      }catch(err){
+        alert(err)
+      }
+    }
 
+    useEffect(() => {
+      load();
+    })
+    
     useEffect(() => {
         (async () => {
           const { status } = await BarCodeScanner.requestPermissionsAsync();
@@ -23,7 +40,7 @@ const QRScanner = (props) => {
     
     const handleBarCodeScanned = ({ type, data }) => {
       setScanned(true);
-      Vibration.vibrate(1 * ONE_SECOND_IN_MS)
+      Vibration.vibrate(1 * vibrationUs)
       alert(`Payment of €${data} successful!`);
       navigation.replace('Root')
     };
