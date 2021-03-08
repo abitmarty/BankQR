@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Component } from 'react';
 import { StyleSheet, Touchable, AsyncStorage } from 'react-native';
 //import AsyncStorage from '../node_modules/@react-native-async-storage';
 
@@ -8,60 +8,112 @@ import { setStatusBarTranslucent } from 'expo-status-bar';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import Colors from '../constants/Colors';
 
-export default function AdminScreen() { 
-  const [balance, setBalance] = useState();
+// export default function AdminScreen() { 
+//   const [balance, setBalance] = useState();
 
-  const remove = async() => {
+//   const remove = async() => {
+//     try {
+//       await AsyncStorage.removeItem("MyBalance")
+//     }catch (err){
+//       alert(err)
+//     }finally {
+//       setBalance("");
+//     }
+//   }
+
+//   const save = async() => {
+//     try {
+//       await AsyncStorage.setItem("MyBalance", balance)
+//     }catch (err){
+//       alert(err)
+//     }
+//   }
+
+//   useEffect(() => {
+//     load();
+//   });
+
+//   const load = async() => {
+//     try {
+//       let balance = await AsyncStorage.getItem("MyBalance");
+
+//       if (balance !== null){
+//         setBalance(balance)
+//       }
+//     }catch(err){
+//       alert(err)
+//     }
+//   }
+
+//   return (
+    // <View style={styles.container}>
+    //   <Text style={styles.title}>Balance</Text>
+    //   <Text>{balance}</Text>
+
+    //   <TextInput style={styles.input} onChangeText={(text) => setBalance(text)}/>
+
+    //   <TouchableOpacity onPress={() => save()} style={styles.button}>
+    //     <Text style={{ color: 'white' }}>Save settings</Text>
+    //   </TouchableOpacity>
+
+    //   <TouchableOpacity onPress={() => remove()} style={styles.button}>
+    //     <Text style={{ color: 'white' }}>Remove settings</Text>
+    //   </TouchableOpacity>
+    // </View>
+//   );
+// }
+
+
+class AdminScreen extends Component {
+  constructor(props : any) {
+    super(props);
+    this.balanceRef = React.createRef();
+    this.state = {
+      balance: ""
+    }
+  }
+
+  save = async() => {
+    try {
+      await AsyncStorage.setItem("MyBalance", this.state.balance)
+    }catch (err){
+      alert(err)
+    }
+    this.balanceRef.current.clear();
+  }
+
+  remove = async() => {
     try {
       await AsyncStorage.removeItem("MyBalance")
     }catch (err){
       alert(err)
     }finally {
-      setBalance("");
+      this.setState({balance: "0"});
     }
+    this.balanceRef.current.clear();
   }
 
-  const save = async() => {
-    try {
-      await AsyncStorage.setItem("MyBalance", balance)
-    }catch (err){
-      alert(err)
-    }
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text style={styles.title}>Balance</Text>
+        <Text>{this.state.balance}</Text>
+
+        <TextInput keyboardType="numeric" ref={this.balanceRef} style={styles.input} onChangeText={(text) => this.setState({balance: text}) }/>
+
+        <TouchableOpacity onPress={() => this.save()} style={styles.button}>
+          <Text style={{ color: 'white' }}>Save settings</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={() => this.remove()} style={styles.button}>
+          <Text style={{ color: 'white' }}>Remove settings</Text>
+        </TouchableOpacity>
+      </View>
+    );
   }
-
-  useEffect(() => {
-    load();
-  });
-
-  const load = async() => {
-    try {
-      let balance = await AsyncStorage.getItem("MyBalance");
-
-      if (balance !== null){
-        setBalance(balance)
-      }
-    }catch(err){
-      alert(err)
-    }
-  }
-
-  return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Balance</Text>
-      <Text>{balance}</Text>
-
-      <TextInput style={styles.input} onChangeText={(text) => setBalance(text)}/>
-
-      <TouchableOpacity onPress={() => save()} style={styles.button}>
-        <Text style={{ color: 'white' }}>Save settings</Text>
-      </TouchableOpacity>
-
-      <TouchableOpacity onPress={() => remove()} style={styles.button}>
-        <Text style={{ color: 'white' }}>Remove settings</Text>
-      </TouchableOpacity>
-    </View>
-  );
 }
+
+export default AdminScreen;
 
 const styles = StyleSheet.create({
   container: {
