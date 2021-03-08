@@ -69,13 +69,14 @@ class AdminScreen extends Component {
     super(props);
     this.balanceRef = React.createRef();
     this.state = {
-      balance: ""
+      balance: "",
+      balanceNew: ""
     }
   }
 
   save = async() => {
     try {
-      await AsyncStorage.setItem("MyBalance", this.state.balance)
+      await AsyncStorage.setItem("MyBalance", this.state.balanceNew)
     }catch (err){
       alert(err)
     }
@@ -93,13 +94,33 @@ class AdminScreen extends Component {
     this.balanceRef.current.clear();
   }
 
+  load = async() => {
+    try {
+      let balance = await AsyncStorage.getItem("MyBalance");
+
+      if (balance !== null){
+        this.setState({balance: balance});
+      }
+    }catch(err){
+      alert(err)
+    }
+  }
+
+   componentDidMount(){
+    this.load();
+  }
+
+  componentDidUpdate(){
+    this.load();
+  }
+
   render() {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Balance</Text>
         <Text>{this.state.balance}</Text>
 
-        <TextInput keyboardType="numeric" ref={this.balanceRef} style={styles.input} onChangeText={(text) => this.setState({balance: text}) }/>
+        <TextInput keyboardType="numeric" ref={this.balanceRef} style={styles.input} onChangeText={(text) => this.setState({balanceNew: text}) }/>
 
         <TouchableOpacity onPress={() => this.save()} style={styles.button}>
           <Text style={{ color: 'white' }}>Save settings</Text>
