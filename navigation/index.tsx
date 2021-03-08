@@ -4,12 +4,13 @@ import * as React from 'react';
 import { ColorSchemeName } from 'react-native';
 import { View } from '../components/Themed';
 import Colors from '../constants/Colors'
-import { Ionicons } from '@expo/vector-icons'; 
 
 import NotFoundScreen from '../screens/NotFoundScreen';
 import { RootStackParamList } from '../types';
 import BottomTabNavigator from './BottomTabNavigator';
 import LinkingConfiguration from './LinkingConfiguration';
+
+import ScannerRef from '../components/ScannerRef';
 
 // If you are not familiar with React Navigation, we recommend going through the
 // "Fundamentals" guide: https://reactnavigation.org/docs/getting-started
@@ -50,7 +51,7 @@ function RootNavigator() {
               flexDirection: 'row',
               marginRight: 15,
             }}>
-              <Ionicons name="scan-outline" size={22} color="white" />
+              <ScannerRef />
             </View>
           )
         }}

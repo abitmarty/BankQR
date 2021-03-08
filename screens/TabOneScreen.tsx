@@ -1,16 +1,22 @@
 import React, { useState, useEffect, Component  } from 'react';
-import { StyleSheet, AsyncStorage, TouchableOpacity } from 'react-native';
+import { Button, StyleSheet, AsyncStorage, TouchableOpacity } from 'react-native';
+//import { NavigationScreenProps } from 'react-navigation';
 
 import EditScreenInfo from '../components/EditScreenInfo';
 import { Text, View } from '../components/Themed';
 import { setStatusBarTranslucent } from 'expo-status-bar';
 
-class TabOne extends Component {
+// interface Props {
+//  navigation: any
+// }
+//class TabOne extends React.Component<Props> {
+
+
+class TabOne extends React.Component {
   constructor(props : any) {
     super(props);
     this.state = {
       balancest: "",
-      count: 0
     }
   }
 
@@ -35,7 +41,6 @@ class TabOne extends Component {
   componentDidUpdate(){
     this.load();
   }
-
 
   render() {
     return (
