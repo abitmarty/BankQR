@@ -11,6 +11,7 @@ const QRScanner = (props) => {
     const navigation = useNavigation(); 
     const [vibrationUs, setVibrationUs]= useState();
     const [balanceUs, setBalanceUs]= useState();
+    const [vibrationFunction, setVibrationFunction]= useState();
     let dataGb = 0;
 
     const save = async() => {
@@ -25,6 +26,7 @@ const QRScanner = (props) => {
       try {
         let vibration = await AsyncStorage.getItem("MyVibration");
         let balance = await AsyncStorage.getItem("MyBalance");
+        let vibrationFunct = await AsyncStorage.getItem("MyVibrationFunction");
   
         if (vibration !== null){
           setVibrationUs(parseInt(vibration));
@@ -36,6 +38,12 @@ const QRScanner = (props) => {
         } else{
           setBalanceUs(parseInt(0));
         }
+        if (vibrationFunct !== null || vibrationFunct == ""){
+          setVibrationFunction(vibrationFunct);
+        } else{
+          setVibrationFunction("vibrationUs");
+        }
+
       }catch(err){
         alert(err)
       }
@@ -54,9 +62,9 @@ const QRScanner = (props) => {
     
     const handleBarCodeScanned = ({ type, data }) => {
       setScanned(true);
-      alert(`Payment of €${data} extracted from balance ${balanceUs} successful!`);
+      //alert(`Payment of €${data} extracted from balance ${balanceUs} successful!`);
       dataGb = parseInt(data);
-      Vibration.vibrate(1 * vibrationUs)
+      Vibration.vibrate(eval(vibrationFunction))
       save();
       setVibrationUs(parseInt(0));
       setBalanceUs(parseInt(0));

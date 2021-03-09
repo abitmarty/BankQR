@@ -19,18 +19,24 @@ class AdminScreen extends Component {
       balance: "",
       balanceNew: "",
       vibration: "",
-      vibrationNew: ""
+      vibrationNew: "",
+      vibrationFunc: "",
+      vibrationFuncNew: ""
     }
   }
 
   save = async() => {
     let saveBalance = true;
     let saveVibration = true;
+    let saveVibFunc = true;
     if (this.state.balanceNew == ""){
       saveBalance = false;
     }
     if (this.state.vibrationNew == ""){
       saveVibration = false;
+    }
+    if(this.state.vibrationFuncNew == ""){
+      saveVibFunc = false;
     }
     try {
       if (saveBalance){
@@ -38,6 +44,9 @@ class AdminScreen extends Component {
       }
       if (saveVibration){
         await AsyncStorage.setItem("MyVibration", this.state.vibrationNew)
+      }
+      if(saveVibFunc){
+        await AsyncStorage.setItem("MyVibrationFunction", this.state.vibrationFuncNew)
       }
       console.warn("saved");
     }catch (err){
@@ -51,6 +60,7 @@ class AdminScreen extends Component {
     try {
       let balance = await AsyncStorage.getItem("MyBalance");
       let vibration = await AsyncStorage.getItem("MyVibration");
+      let vibrationFunc = await AsyncStorage.getItem("MyVibrationFunction");
 
       if (balance !== null){
         this.setState({balance: balance});
@@ -58,6 +68,10 @@ class AdminScreen extends Component {
 
       if (vibration !== null){
         this.setState({vibration: vibration})
+      }
+
+      if (vibrationFunc !== null){
+        this.setState({vibrationFunc: vibrationFunc})
       }
     }catch(err){
       alert(err)
@@ -76,6 +90,10 @@ class AdminScreen extends Component {
 
         <Text style={styles.title}>Vibration in ms</Text>
         <TextInput defaultValue={this.state.vibration} keyboardType="numeric" style={styles.input} onChangeText={(text) => this.setState({vibrationNew: text}) }/>
+
+        <Text style={styles.title}>Vibration function</Text>
+        <Text style={styles.subTitle}>Vibration ms = vibrationUs, Amount = dataGb</Text>
+        <TextInput defaultValue={this.state.vibrationFunc} style={styles.input} onChangeText={(text) => this.setState({vibrationFuncNew: text}) }/>
 
         <TouchableOpacity onPress={() => this.save()} style={styles.button}>
           <Text style={{ color: 'white' }}>Save settings</Text>
@@ -96,6 +114,10 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 20,
     fontWeight: 'bold',
+  },
+  subTitle: {
+    fontSize: 12,
+    fontWeight: 'normal',
   },
   separator: {
     marginVertical: 30,
