@@ -13,33 +13,33 @@ const QRScanner = (props) => {
     const [balanceUs, setBalanceUs]= useState();
     let dataGb = 0;
 
-    // const save = async() => {
-    //   try {
-    //     await AsyncStorage.setItem("MyBalance", (parseInt(balanceUs) - dataGb).toString())
-    //   }catch (err){
-    //     alert(err)
-    //   }
-    // }
+    const save = async() => {
+      try {
+        await AsyncStorage.setItem("MyBalance", (parseInt(balanceUs) - dataGb).toString())
+      }catch (err){
+        alert(err)
+      }
+    }
 
-    // const load = async() => {
-    //   try {
-    //     let vibration = await AsyncStorage.getItem("MyVibration");
-    //     let balance = await AsyncStorage.getItem("MyBalance");
+    const load = async() => {
+      try {
+        let vibration = await AsyncStorage.getItem("MyVibration");
+        let balance = await AsyncStorage.getItem("MyBalance");
   
-    //     if (vibration !== null){
-    //       setVibrationUs(parseInt(vibration));
-    //     } else{
-    //       setVibrationUs(parseInt(0));
-    //     }
-    //     if (balance !== null){
-    //       setBalanceUs(parseInt(balance));
-    //     } else{
-    //       setBalanceUs(parseInt(0));
-    //     }
-    //   }catch(err){
-    //     alert(err)
-    //   }
-    // }
+        if (vibration !== null){
+          setVibrationUs(parseInt(vibration));
+        } else{
+          setVibrationUs(parseInt(0));
+        }
+        if (balance !== null){
+          setBalanceUs(parseInt(balance));
+        } else{
+          setBalanceUs(parseInt(0));
+        }
+      }catch(err){
+        alert(err)
+      }
+    }
 
     // useEffect(() => {
     //   load();
@@ -54,12 +54,13 @@ const QRScanner = (props) => {
     
     const handleBarCodeScanned = ({ type, data }) => {
       setScanned(true);
-      //Vibration.vibrate(1 * vibrationUs)
-      //alert(`Payment of €${data} extracted from balance ${balanceUs} successful!`);
-      //dataGb = parseInt(data);
-      //save();
-      //setVibrationUs(parseInt(0));
-      //setBalanceUs(parseInt(0));
+      load();
+      Vibration.vibrate(1 * vibrationUs)
+      alert(`Payment of €${data} extracted from balance ${balanceUs} successful!`);
+      dataGb = parseInt(data);
+      save();
+      setVibrationUs(parseInt(0));
+      setBalanceUs(parseInt(0));
       navigation.replace('Root')
     };
   

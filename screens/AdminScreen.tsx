@@ -13,7 +13,7 @@ import Colors from '../constants/Colors';
 class AdminScreen extends Component {
   constructor(props : any) {
     super(props);
-    this.balanceRef = React.createRef();
+    //this.balanceRef = React.createRef();
     //this.vibrationRef = React.createRef();
     this.state = {
       balance: "",
@@ -36,7 +36,9 @@ class AdminScreen extends Component {
       if (saveBalance){
         await AsyncStorage.setItem("MyBalance", this.state.balanceNew)
       }
-      await AsyncStorage.setItem("MyVibration", this.state.vibrationNew)
+      if (saveVibration){
+        await AsyncStorage.setItem("MyVibration", this.state.vibrationNew)
+      }
       console.warn("saved");
     }catch (err){
       alert(err)
@@ -70,7 +72,7 @@ class AdminScreen extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.title}>Balance</Text>
-        <TextInput ref= {(el) => { this.balanceRef = el; }} defaultValue={this.state.balance} keyboardType="numeric" style={styles.input} onChangeText={(text) => this.setState({balanceNew: text}) }/>
+        <TextInput defaultValue={this.state.balance} keyboardType="numeric" style={styles.input} onChangeText={(text) => this.setState({balanceNew: text}) }/>
 
         <Text style={styles.title}>Vibration in ms</Text>
         <TextInput defaultValue={this.state.vibration} keyboardType="numeric" style={styles.input} onChangeText={(text) => this.setState({vibrationNew: text}) }/>
