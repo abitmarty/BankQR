@@ -54,10 +54,9 @@ const QRScanner = (props) => {
     
     const handleBarCodeScanned = ({ type, data }) => {
       setScanned(true);
-      //load();
-      Vibration.vibrate(1 * vibrationUs)
       alert(`Payment of €${data} extracted from balance ${balanceUs} successful!`);
       dataGb = parseInt(data);
+      Vibration.vibrate(1 * vibrationUs)
       save();
       setVibrationUs(parseInt(0));
       setBalanceUs(parseInt(0));
