@@ -7,6 +7,8 @@ import { Text, View } from '../components/Themed';
 import { setStatusBarTranslucent } from 'expo-status-bar';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import Colors from '../constants/Colors';
+import HapticSound from '../components/HapticSound';
+
 
 // TODO: remove refs (fixed em)
 
@@ -94,6 +96,9 @@ class AdminScreen extends Component {
         <Text style={styles.title}>Vibration function</Text>
         <Text style={styles.subTitle}>Vibration ms = vibrationUs, Amount = dataGb</Text>
         <TextInput defaultValue={this.state.vibrationFunc} style={styles.input} onChangeText={(text) => this.setState({vibrationFuncNew: text}) }/>
+
+        <Text style={styles.title}>Select a sound</Text>
+        <HapticSound />
 
         <TouchableOpacity onPress={() => this.save()} style={styles.button}>
           <Text style={{ color: 'white' }}>Save settings</Text>
