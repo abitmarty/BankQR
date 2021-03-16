@@ -11,10 +11,11 @@ const HapticSound = (props) => {
 
   const changeSoundValue = (itemValue, itemIndex) => {
     setselectedSound(itemValue);
+    console.log("item value: " +  itemValue);
     save();
   }
 
-  save = async() => {
+  const save = async() => {
     try {
       await AsyncStorage.setItem("MySoundSource", selectedSound)
       console.warn("saved sound");
@@ -27,6 +28,7 @@ const HapticSound = (props) => {
     try {
       let soundSource = await AsyncStorage.getItem("MySoundSource");
       if (soundSource !== null){
+        console.log("Todo: " + soundSource);
         setselectedSound(soundSource);
       }
     }catch(err){
@@ -35,6 +37,7 @@ const HapticSound = (props) => {
   }
 
   function selectSoundSource() {
+    console.log("Playing: " + selectedSound);
     switch (selectedSound) {
       case 'applepay':
           return require('../../assets/sounds/applepay.mp3');
@@ -57,23 +60,25 @@ const HapticSound = (props) => {
     console.log('Playing Sound');
     await sound.playAsync(); }
 
-  React.useEffect(() => {
-    return sound
-      ? () => {
-          console.log('Unloading Sound');
-          sound.unloadAsync(); }
-      : undefined;
-  }, [sound]);
+  // React.useEffect(() => {
+  //   return sound
+  //     ? () => {
+  //         console.log('Unloading Sound');
+  //         sound.unloadAsync(); }
+  //     : undefined;
+  // }, [sound]);
 
   useEffect(() => {
     load();
-  }, [])
+  },)
 
   return (
     <View style={styles.container}>
         <TouchableOpacity onPress={playSound} style={styles.button}>
           <Text style={styles.buttontext}>Play demo</Text>
         </TouchableOpacity>
+
+        <Text>{selectedSound}</Text>
 
         <Picker
           selectedValue={selectedSound}
