@@ -50,9 +50,9 @@ class HapticSound extends Component {
     try {
       await AsyncStorage.setItem("MySoundSource", this.state.selectedSound)
       //console.log("Saved: " + this.state.selectedSound);
-      console.warn("saved sound");
     }catch (err){
       alert(err)
+      console.warn("Saving sound went wrong.");
     }
   }
 
@@ -78,8 +78,6 @@ class HapticSound extends Component {
         <TouchableOpacity onPress={this.playSound} style={styles.button}>
           <Text style={styles.buttontext}>Play demo</Text>
         </TouchableOpacity>
-
-        <Text>{this.state.selectedSound}</Text>
 
         <Picker
           selectedValue={this.state.selectedSound}

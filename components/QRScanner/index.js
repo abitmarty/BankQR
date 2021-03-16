@@ -75,13 +75,13 @@ const QRScanner = (props) => {
     }
 
     async function playSound() {
-      console.log('Loading Sound', selectedSound);
+      // console.log('Loading Sound', selectedSound);
       const { sound } = await Audio.Sound.createAsync(
         selectSoundSource()
       );
       setSound(sound);
   
-      console.log('Playing Sound');
+      // console.log('Playing Sound');
       await sound.playAsync(); }
   
     // React.useEffect(() => {
