@@ -3,6 +3,7 @@ import { Text, View, StyleSheet, Button, Vibration, AsyncStorage } from 'react-n
 import styles from './styles';
 import { BarCodeScanner } from 'expo-barcode-scanner';
 import { useNavigation } from '@react-navigation/native';
+import { Audio } from 'expo-av';
 
 
 const QRScanner = (props) => {
@@ -12,6 +13,8 @@ const QRScanner = (props) => {
     const [vibrationUs, setVibrationUs]= useState();
     const [balanceUs, setBalanceUs]= useState();
     const [vibrationFunction, setVibrationFunction]= useState();
+    const [sound, setSound] = useState();
+    const [selectedSound, setselectedSound] = useState("");
     let dataGb = 0;
 
     const save = async() => {
@@ -27,21 +30,27 @@ const QRScanner = (props) => {
         let vibration = await AsyncStorage.getItem("MyVibration");
         let balance = await AsyncStorage.getItem("MyBalance");
         let vibrationFunct = await AsyncStorage.getItem("MyVibrationFunction");
+        let soundSource = await AsyncStorage.getItem("MySoundSource");
   
         if (vibration !== null){
           setVibrationUs(parseInt(vibration));
-        } else{
+        } else{ 
           setVibrationUs(parseInt(0));
         }
         if (balance !== null){
           setBalanceUs(parseInt(balance));
-        } else{
+        } else {
           setBalanceUs(parseInt(0));
         }
         if (vibrationFunct !== null || vibrationFunct == ""){
           setVibrationFunction(vibrationFunct);
-        } else{
+        } else {
           setVibrationFunction("vibrationUs");
+        }
+        if (soundSource !== null){
+          setselectedSound(soundSource);
+        } else {
+          setselectedSound("");
         }
 
       }catch(err){
@@ -49,22 +58,53 @@ const QRScanner = (props) => {
       }
     }
 
-     useEffect(() => {
-       load();
-     })
-    
     useEffect(() => {
-        (async () => {
-          const { status } = await BarCodeScanner.requestPermissionsAsync();
-          setHasPermission(status === 'granted');
-        })();
-      }, []);
+      load();
+    })
+
+    function selectSoundSource() {
+      switch (selectedSound) {
+        case 'applepay':
+            return require('../../assets/sounds/applepay.mp3');
+        case 'googlepay':
+            return require('../../assets/sounds/googlepay.mp3');
+        case '':
+            console.log('No sound selected.')
+            break;  
+      }
+    }
+
+    async function playSound() {
+      console.log('Loading Sound', selectedSound);
+      const { sound } = await Audio.Sound.createAsync(
+        selectSoundSource()
+      );
+      setSound(sound);
+  
+      console.log('Playing Sound');
+      await sound.playAsync(); }
+  
+    React.useEffect(() => {
+      return sound
+        ? () => {
+            console.log('Unloading Sound');
+            sound.unloadAsync(); }
+        : undefined;
+    }, [sound]);
+   
+   useEffect(() => {
+       (async () => {
+         const { status } = await BarCodeScanner.requestPermissionsAsync();
+         setHasPermission(status === 'granted');
+       })();
+     }, []);
     
     const handleBarCodeScanned = ({ type, data }) => {
       setScanned(true);
       alert(`Payment of €${data} extracted from balance ${balanceUs} successful!`);
       dataGb = parseInt(data);
       Vibration.vibrate(eval(vibrationFunction))
+      playSound();
       save();
       setVibrationUs(parseInt(0));
       setBalanceUs(parseInt(0));
