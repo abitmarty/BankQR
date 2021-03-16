@@ -1,5 +1,5 @@
-import * as React from 'react';
-import { Text, View, StyleSheet, Button } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { Text, View, StyleSheet, Button, AsyncStorage } from 'react-native';
 import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import {Picker} from '@react-native-picker/picker';
 import { Audio } from 'expo-av';
@@ -10,7 +10,28 @@ const HapticSound = (props) => {
   const [selectedSound, setselectedSound] = React.useState("");
 
   const changeSoundValue = (itemValue, itemIndex) => {
-    setselectedSound(itemValue)
+    setselectedSound(itemValue);
+    save();
+  }
+
+  save = async() => {
+    try {
+      await AsyncStorage.setItem("MySoundSource", selectedSound)
+      console.warn("saved sound");
+    }catch (err){
+      alert(err)
+    }
+  }
+
+  const load = async() => {
+    try {
+      let soundSource = await AsyncStorage.getItem("MySoundSource");
+      if (soundSource !== null){
+        setselectedSound(soundSource);
+      }
+    }catch(err){
+      alert(err)
+    }
   }
 
   function selectSoundSource() {
@@ -43,6 +64,10 @@ const HapticSound = (props) => {
           sound.unloadAsync(); }
       : undefined;
   }, [sound]);
+
+  useEffect(() => {
+    load();
+  }, [])
 
   return (
     <View style={styles.container}>
