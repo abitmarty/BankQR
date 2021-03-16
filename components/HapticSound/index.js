@@ -21,35 +21,35 @@ class HapticSound extends Component {
   }
 
   playSound = async() => {
-    console.log('Loading Sound', this.state.selectedSound);
+    //console.log('Loading Sound', this.state.selectedSound);
     const { sound } = await Audio.Sound.createAsync(
       this.selectSoundSource()
       // require('../../assets/sounds/googlepay.mp3')
     );
     this.setState({sound: sound})
 
-    console.log('Playing Sound');
+    //console.log('Playing Sound');
     await sound.playAsync();
   }
 
   selectSoundSource() {
-    console.log("Playing: " + this.state.selectedSound);
+    //console.log("Playing: " + this.state.selectedSound);
     switch (this.state.selectedSound) {
       case 'applepay':
           return require('../../assets/sounds/applepay.mp3');
       case 'googlepay':
           return require('../../assets/sounds/googlepay.mp3');
       case '':
-          console.log('No sound selected.')
+          //console.log('No sound selected.')
           break;  
     }
   }
 
   save = async() => {
-    console.log("In save: " + this.state.selectedSound);
+    //console.log("In save: " + this.state.selectedSound);
     try {
       await AsyncStorage.setItem("MySoundSource", this.state.selectedSound)
-      console.log("Saved: " + this.state.selectedSound);
+      //console.log("Saved: " + this.state.selectedSound);
       console.warn("saved sound");
     }catch (err){
       alert(err)
@@ -59,7 +59,7 @@ class HapticSound extends Component {
   load = async() => {
     try {
       let soundSource = await AsyncStorage.getItem("MySoundSource");
-      console.log("Load: " + soundSource);
+      //console.log("Load: " + soundSource);
       if (soundSource !== null){
         this.setState({selectedSound: soundSource})
       }
