@@ -84,13 +84,13 @@ const QRScanner = (props) => {
       console.log('Playing Sound');
       await sound.playAsync(); }
   
-    React.useEffect(() => {
-      return sound
-        ? () => {
-            console.log('Unloading Sound');
-            sound.unloadAsync(); }
-        : undefined;
-    }, [sound]);
+    // React.useEffect(() => {
+    //   return sound
+    //     ? () => {
+    //         console.log('Unloading Sound');
+    //         sound.unloadAsync(); }
+    //     : undefined;
+    // }, [sound]);
    
    useEffect(() => {
        (async () => {
