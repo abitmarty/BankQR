@@ -137,13 +137,12 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: Colors.light.tint,
-    color: '#ffffff',
     justifyContent: 'center',
     alignItems: 'center',
     alignSelf: 'stretch',
     paddingVertical: 8,
     paddingHorizontal: 86,
     borderRadius: 5,
-    marginTop: 20
+    marginTop: 10
   }
 });

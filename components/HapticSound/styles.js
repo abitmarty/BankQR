@@ -1,4 +1,5 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
+
 
 const styles = StyleSheet.create({
     container: {
@@ -18,7 +19,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
     picker: {
-        marginTop: -40,
+        marginTop: (Platform.OS === 'ios') ? -40 : 0,
         zIndex: -1,
         transform: [
             { scaleX: 0.85 }, 
