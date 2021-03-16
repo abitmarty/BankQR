@@ -84,7 +84,7 @@ class AdminScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>Balance</Text>
+        <Text style={[styles.title, styles.balance]}>Balance</Text>
         <TextInput defaultValue={this.state.balance} keyboardType="numeric" style={styles.input} onChangeText={(text) => this.setState({balanceNew: text}) }/>
 
         <Text style={styles.title}>Vibration in ms</Text>
@@ -98,7 +98,7 @@ class AdminScreen extends Component {
         <HapticSound />
 
         <TouchableOpacity onPress={() => this.save()} style={styles.button}>
-          <Text style={{ color: 'white' }}>Save settings</Text>
+          <Text style={styles.buttontext}>Save settings</Text>
         </TouchableOpacity>
       </View>
     );
@@ -114,8 +114,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   title: {
-    fontSize: 20,
+    fontSize: 18,
     fontWeight: 'bold',
+  },
+  balance: {
+    marginTop: 15,
   },
   subTitle: {
     fontSize: 12,
@@ -134,6 +137,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     height: 44,
     borderRadius: 5,
+    paddingLeft: 8,
   },
   button: {
     backgroundColor: Colors.light.tint,
@@ -141,8 +145,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     alignSelf: 'stretch',
     paddingVertical: 8,
-    paddingHorizontal: 86,
+    paddingHorizontal: 50,
     borderRadius: 5,
-    marginTop: 10
+    marginBottom: 15,
+  },
+  buttontext: {
+    color: 'white',
+    fontSize: 15,
+    fontWeight: 'bold',
   }
 });
