@@ -16,9 +16,8 @@ class HapticSound extends Component {
   }
 
   changeSoundValue = (itemValue, itemIndex) => {
-    this.setState({selectedSound: itemValue});
-    this.save();
-    console.log("after save: " + this.state.selectedSound);
+    this.setState({selectedSound: itemValue}, () => this.save());
+    //this.save();
   }
 
   playSound = async() => {
@@ -47,6 +46,7 @@ class HapticSound extends Component {
   }
 
   save = async() => {
+    console.log("In save: " + this.state.selectedSound);
     try {
       await AsyncStorage.setItem("MySoundSource", this.state.selectedSound)
       console.log("Saved: " + this.state.selectedSound);
@@ -59,6 +59,7 @@ class HapticSound extends Component {
   load = async() => {
     try {
       let soundSource = await AsyncStorage.getItem("MySoundSource");
+      console.log("Load: " + soundSource);
       if (soundSource !== null){
         this.setState({selectedSound: soundSource})
       }
