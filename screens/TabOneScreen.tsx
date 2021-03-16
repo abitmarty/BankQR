@@ -45,7 +45,7 @@ class TabOne extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={styles.title}>${this.state.balancest}</Text>
+        <Text style={styles.title}>€{this.state.balancest}</Text>
     </View>
     );
   }
