@@ -9,9 +9,6 @@ import { TextInput, TouchableOpacity } from 'react-native-gesture-handler';
 import Colors from '../constants/Colors';
 import HapticSound from '../components/HapticSound';
 
-
-// TODO: remove refs (fixed em)
-
 class AdminScreen extends Component {
   constructor(props : any) {
     super(props);
@@ -137,7 +134,6 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     height: 44,
     borderRadius: 5,
-
   },
   button: {
     backgroundColor: Colors.light.tint,

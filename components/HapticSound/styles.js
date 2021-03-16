@@ -10,14 +10,16 @@ const styles = StyleSheet.create({
         backgroundColor: 'tomato',
         padding: 8,
         borderRadius: 10,
-        marginTop: 10
+        marginTop: 10,
+        zIndex: 99,
     },
     buttontext: {
         color: 'white',
         fontSize: 16,
     },
     picker: {
-        marginTop: -30,
+        marginTop: -40,
+        zIndex: -1,
         transform: [
             { scaleX: 0.85 }, 
             { scaleY: 0.85 },

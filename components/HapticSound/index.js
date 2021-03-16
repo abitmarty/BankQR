@@ -56,9 +56,9 @@ const HapticSound = (props) => {
           onValueChange={
             changeSoundValue
           }>
-          <Picker.Item label="Choose a sound..." value="" color="white"/>
-          <Picker.Item label="Apple pay" value="applepay" color="white"/>
-          <Picker.Item label="Google pay" value="googlepay" color="white"/>
+          <Picker.Item label="Choose a sound..." value="" color="black"/>
+          <Picker.Item label="Apple pay" value="applepay" color="black"/>
+          <Picker.Item label="Google pay" value="googlepay" color="black"/>
           
         </Picker>
     </View>

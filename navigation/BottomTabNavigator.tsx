@@ -34,21 +34,21 @@ export default function BottomTabNavigator({
         name="Balance"
         component={TabOneNavigator}
         options={{
-          tabBarIcon: ({ color }) => <MaterialIcons name="account-balance-wallet" size={24} color="white" />,
+          tabBarIcon: ({ color }) => <MaterialIcons name="account-balance-wallet" size={24} color="black" />,
         }}
       />
       <BottomTab.Screen
         name="Scanner"
         component={TabTwoNavigator}
         options={{
-          tabBarIcon: ({ color }) => <Ionicons name="scan-outline" size={24} color="white" />,
+          tabBarIcon: ({ color }) => <Ionicons name="scan-outline" size={24} color="black" />,
         }}
       />
       <BottomTab.Screen
         name="Admin"
         component={AdminNavigator}
         options={{
-          tabBarIcon: ({ color }) => <MaterialIcons name="admin-panel-settings" size={24} color="white" />,
+          tabBarIcon: ({ color }) => <MaterialIcons name="admin-panel-settings" size={24} color="black" />,
         }}
       />
     </BottomTab.Navigator>
