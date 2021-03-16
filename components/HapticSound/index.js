@@ -24,7 +24,7 @@ class HapticSound extends Component {
   playSound = async() => {
     console.log('Loading Sound', this.state.selectedSound);
     const { sound } = await Audio.Sound.createAsync(
-      selectSoundSource()
+      this.selectSoundSource()
       // require('../../assets/sounds/googlepay.mp3')
     );
     this.setState({sound: sound})
