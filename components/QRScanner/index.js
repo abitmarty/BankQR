@@ -68,6 +68,10 @@ const QRScanner = (props) => {
             return require('../../assets/sounds/applepay.mp3');
         case 'googlepay':
             return require('../../assets/sounds/googlepay.mp3');
+        case 'low':
+          return require('../../assets/sounds/low.mp3');
+        case 'high':
+          return require('../../assets/sounds/high.mp3');
         case '':
             console.log('No sound selected.')
             break;  

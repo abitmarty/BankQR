@@ -39,6 +39,10 @@ class HapticSound extends Component {
           return require('../../assets/sounds/applepay.mp3');
       case 'googlepay':
           return require('../../assets/sounds/googlepay.mp3');
+      case 'low':
+        return require('../../assets/sounds/low.mp3');
+      case 'high':
+        return require('../../assets/sounds/high.mp3');
       case '':
           //console.log('No sound selected.')
           break;  
@@ -88,6 +92,8 @@ class HapticSound extends Component {
           <Picker.Item label="Choose a sound..." value="" color="black"/>
           <Picker.Item label="Apple pay" value="applepay" color="black"/>
           <Picker.Item label="Google pay" value="googlepay" color="black"/>
+          <Picker.Item label="High vib" value="high" color="black"/>
+          <Picker.Item label="Low vib" value="low" color="black"/>
           
         </Picker>
     </View>
