@@ -84,7 +84,7 @@ class AdminScreen extends Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text style={[styles.title, styles.balance]}>Purchases</Text>
+        <Text style={[styles.title, styles.balance]}>Products purchased</Text>
         <TextInput defaultValue={this.state.balance} keyboardType="numeric" style={styles.input} onChangeText={(text) => this.setState({balanceNew: text}) }/>
 
         <Text style={styles.title}>Vibration in ms</Text>

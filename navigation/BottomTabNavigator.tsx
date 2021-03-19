@@ -28,10 +28,10 @@ export default function BottomTabNavigator({
   const colorScheme = useColorScheme();
   return (
     <BottomTab.Navigator
-      initialRouteName="Balance"
+      initialRouteName="Purchases"
       tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
       <BottomTab.Screen
-        name="Balance"
+        name="Purchases"
         component={TabOneNavigator}
         options={{
           tabBarIcon: ({ color }) => <MaterialIcons name="account-balance-wallet" size={24} color="black" />,
@@ -71,7 +71,7 @@ function TabOneNavigator() {
       <TabOneStack.Screen
         name="TabOneScreen"
         component={TabOneScreen}
-        options={{ headerTitle: 'Purchases' }}
+        options={{ headerTitle: 'Products purchased' }}
       />
     </TabOneStack.Navigator>
   );
