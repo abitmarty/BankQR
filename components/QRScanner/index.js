@@ -19,7 +19,7 @@ const QRScanner = (props) => {
 
     const save = async() => {
       try {
-        await AsyncStorage.setItem("MyBalance", (parseInt(balanceUs) - dataGb).toString())
+        await AsyncStorage.setItem("MyBalance", (parseInt(balanceUs) + dataGb).toString())
       }catch (err){
         alert(err)
       }
@@ -102,7 +102,7 @@ const QRScanner = (props) => {
      async function handleBarCodeScanned({ type, data }) {
       setScanned(true);
       await playSound();
-      alert(`Payment of €${data} extracted from balance ${balanceUs} successful!`);
+      alert(`Purchase of ${Math.floor(parseInt(data))} products added to ${balanceUs} successful!`);
       dataGb = parseInt(data);
       Vibration.vibrate(eval(vibrationFunction))
       save();
